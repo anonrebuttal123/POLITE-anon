@@ -66,6 +66,20 @@ For undockerized version, simply remove the "./scripts/run_docker_cpu.sh" part.
 ./scripts/run_docker_cpu.sh ./scripts/run_walker_baseline_800.sh
 ~~~
 
+## Looking at results
+### Tensorboard
+~~~
+tensorboard --logdir ./runs/
+~~~
+### Weights and biases
+If you want to see the graph with w&b you can add this at the end of each script:
+~~~
+--track --wandb-project-name your-project-name --wandb-entity your-entity --eval-freq -1
+~~~
+Like this (run_cheetah_polite_200.sh)
+~~~
+python train.py --algo ppo --env HalfCheetah-v3 --n_queries 20 --n_init_queries 20 --max_queries 200 --truth 90 --seed $seed --prefcallback "pref.callbacks.UpdateRewardFunctionCriticalPoint" --regularize --track --wandb-project-name your-project-name --wandb-entity your-entity --eval-freq -1
+~~~
 ## Running preference learning
 To run preference learning all you have to do is to add the preference learning hyperparameters to the hyperparameters/ppo.yml file similar to this:
 ~~~
